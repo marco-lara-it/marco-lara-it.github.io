@@ -15,6 +15,10 @@
     --gray-light:#d2d2d7;
     --blue:#0071e3;
     --blue-dark:#0058b0;
+    --coral:#ff6b57;
+    --teal:#00b3a4;
+    --amber:#ffb100;
+    --violet:#8b5cf6;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth; scroll-padding-top:64px;}
@@ -48,11 +52,22 @@
   section{padding:100px 0;}
   section.alt{background:var(--bg-alt);}
 
-  .hero{text-align:center; padding:120px 0 90px;}
-  .hero .portrait{
-    width:120px; height:120px; border-radius:50%; object-fit:cover;
-    margin:0 auto 28px; display:block; box-shadow:0 8px 30px rgba(0,0,0,0.12);
+  .hero{text-align:center; padding:120px 0 90px; position:relative; overflow:hidden;}
+  .hero::before{
+    content:''; position:absolute; top:-120px; left:50%; transform:translateX(-50%);
+    width:600px; height:400px; border-radius:50%;
+    background:radial-gradient(circle, rgba(255,107,87,0.16), rgba(0,179,164,0.12) 40%, transparent 70%);
+    z-index:0; pointer-events:none;
   }
+  .hero .portrait{
+    width:180px; height:180px; border-radius:50%; object-fit:cover;
+    margin:0 auto 28px; display:block; position:relative; z-index:1;
+    box-shadow:0 12px 40px rgba(0,0,0,0.16);
+    border:4px solid #fff;
+    outline:2px solid var(--coral);
+    outline-offset:6px;
+  }
+  .hero .eyebrow, .hero h1, .hero p, .hero-actions{position:relative; z-index:1;}
   .hero .eyebrow{font-size:15px; color:var(--gray); font-weight:500; margin-bottom:12px;}
   .hero h1{font-size:56px; line-height:1.08; margin:0 auto 20px; max-width:760px;}
   .hero p{font-size:20px; color:var(--gray); max-width:600px; margin:0 auto 36px; line-height:1.5;}
@@ -88,7 +103,12 @@
     padding:48px 0; border-bottom:1px solid rgba(0,0,0,0.08); max-width:640px; margin:0 auto;
   }
   .stop:last-child{border-bottom:none;}
-  .stop-tag{font-size:13px; font-weight:600; color:var(--blue); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:10px;}
+  .stop-tag{font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:10px;}
+  .stop.c-coral .stop-tag{color:var(--coral);}
+  .stop.c-teal .stop-tag{color:var(--teal);}
+  .stop.c-amber .stop-tag{color:#b17c00;}
+  .stop.c-violet .stop-tag{color:var(--violet);}
+  .stop.c-blue .stop-tag{color:var(--blue);}
   .stop h3{font-size:26px; margin-bottom:12px; line-height:1.15;}
   .stop p{font-size:16px; color:var(--gray); margin:0; line-height:1.6;}
 
@@ -96,9 +116,21 @@
   .projects-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
   .project-card{
     background:#fff; border-radius:20px; padding:32px; border:1px solid rgba(0,0,0,0.06);
+    border-left:4px solid var(--blue);
     display:flex; flex-direction:column; gap:12px; min-height:200px;
+    transition:transform .25s ease, box-shadow .25s ease;
   }
-  .project-card .tag{font-size:12px; font-weight:600; color:var(--blue); text-transform:uppercase; letter-spacing:0.03em;}
+  .project-card:hover{transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.08);}
+  .project-card.c-coral{border-left-color:var(--coral);}
+  .project-card.c-teal{border-left-color:var(--teal);}
+  .project-card.c-amber{border-left-color:var(--amber);}
+  .project-card.c-violet{border-left-color:var(--violet);}
+  .project-card .tag{font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.03em;}
+  .project-card.c-coral .tag{color:var(--coral);}
+  .project-card.c-teal .tag{color:var(--teal);}
+  .project-card.c-amber .tag{color:#b17c00;}
+  .project-card.c-violet .tag{color:var(--violet);}
+  .project-card.c-blue .tag{color:var(--blue);}
   .project-card h3{font-size:20px;}
   .project-card p{font-size:15px; color:var(--gray); margin:0; flex:1; line-height:1.55;}
   .project-card .meta{font-size:13px; color:var(--gray); padding-top:14px; border-top:1px solid rgba(0,0,0,0.06);}
@@ -110,6 +142,15 @@
   .contact-section p{font-size:17px; color:var(--gray); max-width:520px; margin:0 auto 32px;}
 
   footer{padding:40px 0; text-align:center; font-size:12px; color:var(--gray); border-top:1px solid rgba(0,0,0,0.08);}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+
+  .navbar .cta{transition:transform .2s ease, background .2s ease;}
+  .navbar .cta:hover{transform:translateY(-1px); background:var(--coral);}
+
+  .btn-primary{transition:transform .2s ease, background .2s ease;}
+  .btn-primary:hover{transform:translateY(-1px);}
 
   @media (max-width:760px){
     .hero h1{font-size:36px;}
@@ -176,7 +217,7 @@
       <h2>The places that shaped me</h2>
     </div>
 
-    <div class="stop">
+    <div class="reveal stop c-coral">
       <div class="stop-text">
         <div class="stop-tag">Sardinia</div>
         <h3>A childhood between the sea and the mountains</h3>
@@ -184,7 +225,7 @@
       </div>
     </div>
 
-    <div class="stop">
+    <div class="reveal stop c-amber">
       <div class="stop-text">
         <div class="stop-tag">Age 16</div>
         <h3>My first drone, built from scratch</h3>
@@ -192,7 +233,7 @@
       </div>
     </div>
 
-    <div class="stop">
+    <div class="reveal stop c-teal">
       <div class="stop-text">
         <div class="stop-tag">Reggio Emilia</div>
         <h3>Bachelor's and master's in Management Engineering</h3>
@@ -200,7 +241,7 @@
       </div>
     </div>
 
-    <div class="stop">
+    <div class="reveal stop c-violet">
       <div class="stop-text">
         <div class="stop-tag">Nagoya, Japan</div>
         <h3>Exchange semester at Nagoya University</h3>
@@ -208,7 +249,7 @@
       </div>
     </div>
 
-    <div class="stop">
+    <div class="reveal stop c-blue">
       <div class="stop-text">
         <div class="stop-tag">Sedico, Veneto</div>
         <h3>EssilorLuxottica — Supply chain</h3>
@@ -226,25 +267,25 @@
       <h2>Things I've worked on</h2>
     </div>
     <div class="projects-grid">
-      <div class="project-card">
+      <div class="reveal project-card c-coral">
         <div class="tag">Bachelor's degree</div>
         <h3>GUI connected to shared Google Sheets</h3>
         <p>Built a GUI connected to shared Google Sheets documents, to simplify access and data management without working directly on the raw spreadsheet.</p>
         <div class="meta"><a href="https://github.com/marco-lara-it/project-interface" target="_blank">github.com/marco-lara-it/project-interface ↗</a></div>
       </div>
-      <div class="project-card">
+      <div class="reveal project-card c-teal">
         <div class="tag">Master's thesis · EssilorLuxottica</div>
         <h3>Order analysis reporting</h3>
         <p>Developed a reporting system for order analysis, built during my master's thesis in collaboration with EssilorLuxottica.</p>
         <div class="meta">Thesis project</div>
       </div>
-      <div class="project-card">
+      <div class="reveal project-card c-amber">
         <div class="tag">Personal project</div>
         <h3>Stock price forecasting</h3>
         <p>A model for forecasting stock prices, built to explore predictive analysis techniques applied to financial markets.</p>
         <div class="meta"><a href="https://github.com/marco-lara-it/stock_forecast" target="_blank">github.com/marco-lara-it/stock_forecast ↗</a></div>
       </div>
-      <div class="project-card">
+      <div class="reveal project-card c-violet">
         <div class="tag">EssilorLuxottica · Sedico</div>
         <h3>Supply chain process improvement</h3>
         <p>Ongoing improvement work on supply chain processes at the Sedico plant. For confidentiality reasons I can't share specific data — feel free to reach out if you'd like to know more.</p>
@@ -270,5 +311,17 @@
   </div>
 </footer>
 
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
